@@ -14,3 +14,6 @@ print(x.first!)
 let p = x.prefix(43)
 let s = p.suffix(20).reversed()
 print(s.first!)
+
+let infiniteArithemticSeries = sequence(first: 10, next: { $0 + 3 })
+print(infiniteArithemticSeries.prefix(10).suffix(5).reduce(0, +))
