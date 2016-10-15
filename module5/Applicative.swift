@@ -1,47 +1,35 @@
-class Sales {
-    let profit: Int
-   
-    public init(_ profit: Int) { 
-        self.profit = profit
-    }
- 
-    public func giftAmountFn() -> ((Int) -> Int)? {
-       guard profit > 5 else { return nil }
-       return { total in (self.profit/2)*total/100 } 
+ion Optional {
+    func apply<U>(_ fn: ((Wrapped) -> U)?) -> U? {
+        switch fn {
+            case .some(let f): return self.map(f)
+            case .none: return .none
+        }
     }
 }
 
-class Customer {
-    let name: String
-    let totalPurchases: Int
-    let age: Int 
-
-    public init?(_ name: String, _ totalPurchases: Int, _ age: Int) {
-        guard age < 75 else { return nil } 
-        self.age = age
-        self.name = name
-        self.totalPurchases = totalPurchases
-    }
+func getAdder(_ a: Int) -> ((Int) -> Int)? {
+    guard a % 2 == 0 else { return .none }
+    return { $0 + a }
 }
 
-let sales = Sales(10)
-let customer0 = Customer("Suresh", 30000, 32)
+let x: Int? = 10
+let s = x.apply(getAdder(2))
+print(s)
 
+let y: Int? = nil
+let s1 = y.apply(getAdder(10))
+print(s1)
 
-//the bad way
-var giftAmount = 0
-let gfunc = sales.giftAmountFn()
-if let giftCalc = gfunc {
-    if let c = customer0 {
-        giftAmount = giftCalc(c.totalPurchases)
-     }
+let z: Int? = 20
+let s2 = z.apply(getAdder(11))
+print(s2)
+
+//!!!
+func curriedAddition(_ x: Int) -> (Int) -> Int {
+    return { $0 + x }
 }
-print(giftAmount)
 
-
-//the cooler way
-extension Optional<T> {
-    public func apply`
-
+let w = x.map(curriedAddition)
+print(z.apply(w))
 
 
