@@ -1,4 +1,4 @@
-ion Optional {
+extension Optional {
     func apply<U>(_ fn: ((Wrapped) -> U)?) -> U? {
         switch fn {
             case .some(let f): return self.map(f)
